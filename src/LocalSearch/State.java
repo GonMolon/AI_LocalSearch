@@ -13,12 +13,11 @@ public class State {
     // Contains the sum of weights of the packages assigned to an offer
     private int[] weight_of_offer;
 
-    public static void setPackagesOffers(Paquetes packages, Transporte offers) {
-        State.packages = packages;
-        State.offers = offers;
-    }
-
-    public State() {
+    public State(Paquetes packages, Transporte offers) {
+        if(State.packages == null || State.offers == null) {
+            State.packages = packages;
+            State.offers = offers;
+        }
         offer_of_package = new int[packages.size()];
         weight_of_offer = new int[offers.size()];
     }
