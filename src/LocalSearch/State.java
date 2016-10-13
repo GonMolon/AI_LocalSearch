@@ -58,4 +58,6 @@ public class State {
             System.out.println(weight_of_offer[i] + "/" + oferta.getPesomax() + " -> (" + weight_of_offer[i]*100/oferta.getPesomax() + ")");
         }
     }
+
+
 }
