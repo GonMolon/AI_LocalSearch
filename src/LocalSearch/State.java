@@ -2,6 +2,7 @@ package LocalSearch;
 
 import IA.Azamon.Oferta;
 import IA.Azamon.Paquete;
+import aima.search.framework.Successor;
 
 public class State {
 
