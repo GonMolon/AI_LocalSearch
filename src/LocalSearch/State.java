@@ -7,6 +7,8 @@ public class State {
 
     static private Problem problem;
 
+    static private float HAPPINESS_RELATION = 2; //2€ for each day that the package arrives earlier
+
     // Contains the offer's index to which a package is assigned
     protected int[] offer_of_package;
     // Contains the sum of weights of the packages assigned to an offer
@@ -38,9 +40,11 @@ public class State {
         if(o.getDias() <= p.getPrioridad()*2+1 && weight_of_offer[offerID] + p.getPeso() <= o.getPesomax()) {
             if(offer_of_package[packageID] != -1) {
                 weight_of_offer[offer_of_package[packageID]] -= p.getPeso();
-                cost -= problem.getOffer(offer_of_package[packageID]).getPrecio() * p.getPeso();
+                cost -= getPrice(problem.getOffer(offer_of_package[packageID])) * p.getPeso();
+                updateHappiness(p, problem.getOffer(offer_of_package[packageID]), false);
             }
-            cost += o.getPrecio() * p.getPeso();
+            cost += getPrice(o) * p.getPeso();
+            updateHappiness(p, o, true);
             weight_of_offer[offerID] += p.getPeso();
             offer_of_package[packageID] = offerID;
             return true;
@@ -61,14 +65,39 @@ public class State {
                 weight_of_offer[offerID2] - p2.getPeso() + p1.getPeso() < o2.getPesomax()) {
             weight_of_offer[offerID1] += -p1.getPeso() + p2.getPeso();
             weight_of_offer[offerID2] += -p2.getPeso() + p1.getPeso();
-            cost = cost - p1.getPeso() * o1.getPrecio() - p2.getPeso() * o2.getPrecio();
-            cost = cost + p1.getPeso() * o2.getPrecio() + p2.getPeso() * o1.getPrecio();
+            cost = cost - p1.getPeso() * getPrice(o1) - p2.getPeso() * getPrice(o2);
+            cost = cost + p1.getPeso() * getPrice(o2) + p2.getPeso() * getPrice(o1);
+            updateHappiness(p1, o1, false);
+            updateHappiness(p2, o2, false);
+            updateHappiness(p1, o2, true);
+            updateHappiness(p2, o1, true);
             int aux = offer_of_package[packageIDa];
             offer_of_package[packageIDa] = offer_of_package[packageIDb];
             offer_of_package[packageIDb] = aux;
             return true;
         } else {
             return false;
+        }
+    }
+
+    private double getPrice(Oferta o) {
+        if(o.getDias() == 3 || o.getDias() == 4) {
+            return o.getPrecio() + 0.25;
+        } else if(o.getDias() == 5) {
+            return o.getPrecio() + 0.5;
+        } else {
+            return o.getPrecio();
+        }
+    }
+
+    private void updateHappiness(Paquete p, Oferta o, boolean add) {
+        double happiness = (p.getPrioridad()*2) - o.getDias();
+        if(happiness > 0) {
+            if(add) {
+                cost -= happiness * HAPPINESS_RELATION;
+            } else {
+                cost += happiness * HAPPINESS_RELATION;
+            }
         }
     }
 
@@ -86,6 +115,7 @@ public class State {
             System.out.print(i + ": ");
             System.out.println(weight_of_offer[i] + "/" + oferta.getPesomax() + " -> (" + weight_of_offer[i]*100/oferta.getPesomax() + ")");
         }
+        System.out.println("COST = " + getCost());
     }
 
     public Problem getProblem() {
