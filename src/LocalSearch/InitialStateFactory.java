@@ -12,7 +12,6 @@ public class InitialStateFactory {
 
     private static boolean i_generate(int i, State state, Problem problem) {
         if(i == problem.totalPackages()) {
-            System.out.println("hello");
             state.print();
             return true;
         } else {
@@ -31,4 +30,26 @@ public class InitialStateFactory {
             return false;
         }
     }
+
+    private static boolean i_generate2(int i, State state, Problem problem) {
+        if(i == problem.totalPackages()) {
+            state.print();
+            return true;
+        } else {
+            Paquete act = problem.getPackage(i);
+            for(int days = 1; days <= act.getPrioridad()*2+1; ++days) {
+                for(int offerID : problem.offers[days-1]) {
+                    if(state.movePackage(i, offerID)) {
+                        boolean found = i_generate2(i+1, state, problem);
+                        if(found) {
+                            return true;
+                        }
+                        state.offer_of_package[i] = -1;
+                    }
+                }
+            }
+            return false;
+        }
+    }
+
 }

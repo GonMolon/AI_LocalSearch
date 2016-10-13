@@ -59,5 +59,7 @@ public class State {
         }
     }
 
-
+    public Problem getProblem() {
+        return problem;
+    }
 }
