@@ -2,13 +2,12 @@ package LocalSearch;
 
 import IA.Azamon.Oferta;
 import IA.Azamon.Paquete;
-import aima.search.framework.Successor;
 
 public class State {
 
-    static private Problem problem;
+    static private Statement statement;
 
-    static private float HAPPINESS_RELATION = 2; //2€ for each day that the package arrives earlier
+    static private float HAPPINESS_RELATION = 10; //2€ for each day that the package arrives earlier
 
     // Contains the offer's index to which a package is assigned
     protected int[] offer_of_package;
@@ -17,12 +16,12 @@ public class State {
 
     private  double cost;
 
-    public State(Problem problem) {
-        if(State.problem == null) {
-            State.problem = problem;
+    public State(Statement statement) {
+        if(State.statement == null) {
+            State.statement = statement;
         }
-        weight_of_offer = new float[problem.totalOffers()];
-        offer_of_package = new int[problem.totalPackages()];
+        weight_of_offer = new float[statement.totalOffers()];
+        offer_of_package = new int[statement.totalPackages()];
         cost = 0;
         for(int id = 0; id < offer_of_package.length; ++id) { //By default, a package is not assigned
             offer_of_package[id] = -1;
@@ -36,13 +35,13 @@ public class State {
     }
 
     public boolean movePackage(int packageID, int offerID) {
-        Paquete p = problem.getPackage(packageID);
-        Oferta o = problem.getOffer(offerID);
+        Paquete p = statement.getPackage(packageID);
+        Oferta o = statement.getOffer(offerID);
         if(o.getDias() <= p.getPrioridad()*2+1 && weight_of_offer[offerID] + p.getPeso() <= o.getPesomax()) {
             if(offer_of_package[packageID] != -1) {
                 weight_of_offer[offer_of_package[packageID]] -= p.getPeso();
-                cost -= getPrice(problem.getOffer(offer_of_package[packageID])) * p.getPeso();
-                updateHappiness(p, problem.getOffer(offer_of_package[packageID]), false);
+                cost -= getPrice(statement.getOffer(offer_of_package[packageID])) * p.getPeso();
+                updateHappiness(p, statement.getOffer(offer_of_package[packageID]), false);
             }
             cost += getPrice(o) * p.getPeso();
             updateHappiness(p, o, true);
@@ -55,12 +54,12 @@ public class State {
     }
 
     public boolean swapPackage(int packageIDa, int packageIDb) {
-        Paquete p1 = problem.getPackage(packageIDa);
-        Paquete p2 = problem.getPackage(packageIDb);
+        Paquete p1 = statement.getPackage(packageIDa);
+        Paquete p2 = statement.getPackage(packageIDb);
         int offerID1 = offer_of_package[packageIDa];
         int offerID2 = offer_of_package[packageIDb];
-        Oferta o1 = problem.getOffer(offerID1);
-        Oferta o2 = problem.getOffer(offerID2);
+        Oferta o1 = statement.getOffer(offerID1);
+        Oferta o2 = statement.getOffer(offerID2);
         if(o1.getDias() <= p2.getPrioridad()*2+1 && o2.getDias() <= p1.getPrioridad()*2+1 &&
                 weight_of_offer[offerID1] - p1.getPeso() + p2.getPeso() < o1.getPesomax() &&
                 weight_of_offer[offerID2] - p2.getPeso() + p1.getPeso() < o2.getPesomax()) {
@@ -103,24 +102,24 @@ public class State {
     }
 
     public void print() {
-        System.out.println("State:");
+        /*System.out.println("State:");
         System.out.println("Distribution: ");
-        for(int i = 0; i < problem.totalPackages(); ++i) {
-            Paquete paquete = problem.getPackage(i);
+        for(int i = 0; i < statement.totalPackages(); ++i) {
+            Paquete paquete = statement.getPackage(i);
             System.out.print(i + ": ");
             System.out.println(offer_of_package[i]);
-        }
-        System.out.println("Summary: ");
-        for(int i = 0; i < problem.totalOffers(); ++i) {
-            Oferta oferta = problem.getOffer(i);
+        }*/
+        /*System.out.println("Summary: ");
+        for(int i = 0; i < statement.totalOffers(); ++i) {
+            Oferta oferta = statement.getOffer(i);
             System.out.print(i + ": ");
             System.out.println(weight_of_offer[i] + "/" + oferta.getPesomax() + " -> (" + weight_of_offer[i]*100/oferta.getPesomax() + ")");
-        }
+        }*/
         System.out.println("COST = " + getCost());
     }
 
-    public Problem getProblem() {
-        return problem;
+    public Statement getProblem() {
+        return statement;
     }
 
     public double getCost() {

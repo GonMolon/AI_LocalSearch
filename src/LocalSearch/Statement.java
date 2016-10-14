@@ -7,13 +7,13 @@ import IA.Azamon.Transporte;
 
 import java.util.Comparator;
 
-public class Problem {
+public class Statement {
 
     private Paquetes packages;
     private Transporte transport;
     protected int[][] offers;
 
-    public Problem(int n, double prop, int seed) {
+    public Statement(int n, double prop, int seed) {
         packages = new Paquetes(n, seed);
         packages.sort(new Comparator<Paquete>() {
             @Override
