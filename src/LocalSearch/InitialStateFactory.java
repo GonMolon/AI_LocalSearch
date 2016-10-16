@@ -33,7 +33,6 @@ public class InitialStateFactory {
 
     private static boolean i_generate2(int i, State state, Statement statement) {
         if(i == statement.totalPackages()) {
-            state.print();
             return true;
         } else {
             Paquete act = statement.getPackage(i);
