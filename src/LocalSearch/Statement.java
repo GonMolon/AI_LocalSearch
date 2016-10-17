@@ -41,9 +41,9 @@ public class Statement {
                 } else {
                     if(sortMode != SortMode.RANDOM) {
                         if(a.getPrecio() < b.getPrecio()) {
-                            return sortMode == SortMode.OPTIMUM ? 1 : -1;
-                        } else if(a.getPrecio() > b.getPrecio()) {
                             return sortMode == SortMode.OPTIMUM ? -1 : 1;
+                        } else if(a.getPrecio() > b.getPrecio()) {
+                            return sortMode == SortMode.OPTIMUM ? 1 : -1;
                         } else {
                             return 0;
                         }

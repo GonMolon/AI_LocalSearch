@@ -4,11 +4,12 @@ import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
 import aima.search.informed.HillClimbingSearch;
+import aima.search.informed.SimulatedAnnealingSearch;
 
 public class Main {
     public static void main(String[] args) {
-        int n = 1000;
-        double prop = 1.2;
+        int n = 10;
+        double prop = 10;
         int seed = 123;
         SearchAgent bestAgent = null;
         State bestState = null;
