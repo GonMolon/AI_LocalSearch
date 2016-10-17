@@ -7,7 +7,7 @@ public class State {
 
     static private Statement statement;
 
-    static private float HAPPINESS_RELATION = 10; //2€ for each day that the package arrives earlier
+    static private float HAPPINESS_RELATION = 0; //2€ for each day that the package arrives earlier
 
     // Contains the offer's index to which a package is assigned
     protected int[] offer_of_package;
@@ -15,6 +15,8 @@ public class State {
     protected float[] weight_of_offer;
 
     private  double cost;
+
+    public boolean valid = false;
 
     public State(Statement statement) {
         if(State.statement == null) {
@@ -65,8 +67,8 @@ public class State {
                 weight_of_offer[offerID2] - p2.getPeso() + p1.getPeso() < o2.getPesomax()) {
             weight_of_offer[offerID1] += -p1.getPeso() + p2.getPeso();
             weight_of_offer[offerID2] += -p2.getPeso() + p1.getPeso();
-            cost = cost - p1.getPeso() * getPrice(o1) - p2.getPeso() * getPrice(o2);
-            cost = cost + p1.getPeso() * getPrice(o2) + p2.getPeso() * getPrice(o1);
+            cost -= p1.getPeso() * getPrice(o1) - p2.getPeso() * getPrice(o2);
+            cost += p1.getPeso() * getPrice(o2) + p2.getPeso() * getPrice(o1);
             updateHappiness(p1, o1, false);
             updateHappiness(p2, o2, false);
             updateHappiness(p1, o2, true);

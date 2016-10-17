@@ -12,6 +12,8 @@ public class Statement {
     private Paquetes packages;
     private Transporte transport;
     protected int[][] offers;
+    private double totalWeight = 0;
+    private double totalOfferedWeight = 0;
 
     public Statement(int n, double prop, int seed) {
         packages = new Paquetes(n, seed);
@@ -46,6 +48,9 @@ public class Statement {
                 }
             }
         });
+        for(Paquete paquete : packages) {
+            totalWeight += paquete.getPeso();
+        }
         offers = new int[5][];
         for(int i = 0; i < 5; ++i) {
             offers[i] = new int[0];
@@ -56,6 +61,7 @@ public class Statement {
             ++t;
             ++T;
             Oferta offer = transport.get(i);
+            totalOfferedWeight += offer.getPesomax();
             if(i == transport.size()-1 || offer.getDias() != transport.get(i+1).getDias()) {
                 offers[offer.getDias()-1] = new int[t];
                 int k = 0;
@@ -90,7 +96,7 @@ public class Statement {
     }
 
     private void print() {
-        System.out.println("PACKAGES");
+        /*System.out.println("PACKAGES");
         int id = 0;
         for(Paquete paquete : packages) {
             System.out.println("Package ID: " + id++);
@@ -106,6 +112,9 @@ public class Statement {
                 System.out.println("    " + "Price (kg): " + oferta.getPrecio());
                 System.out.println("    " + "Max weight : " + oferta.getPesomax());
             }
-        }
+        }*/
+        System.out.println("TOTAL WEIGHT = " + totalWeight);
+        System.out.println("TOTAL OFFERED WEIGHT = " + totalOfferedWeight);
+        System.out.println("REAL PROPORTION = " + totalOfferedWeight/totalWeight);
     }
 }

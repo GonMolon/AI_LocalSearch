@@ -6,13 +6,14 @@ public class InitialStateFactory {
 
     public static State generateInitialState(Statement statement) {
         State state = new State(statement);
-        i_generate2(0, state, statement);
+        i_generate(0, state, statement);
         return state;
     }
 
     private static boolean i_generate(int i, State state, Statement statement) {
         if(i == statement.totalPackages()) {
             state.print();
+            state.valid = true;
             return true;
         } else {
             Paquete act = statement.getPackage(i);
