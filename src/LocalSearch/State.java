@@ -5,9 +5,9 @@ import IA.Azamon.Paquete;
 
 public class State {
 
-    static private Statement statement;
+    private Statement statement;
 
-    static private float HAPPINESS_RELATION = 0; //2€ for each day that the package arrives earlier
+    static private float HAPPINESS_RELATION = 10; //2€ for each day that the package arrives earlier
 
     // Contains the offer's index to which a package is assigned
     protected int[] offer_of_package;
@@ -19,9 +19,7 @@ public class State {
     public boolean valid = false;
 
     public State(Statement statement) {
-        if(State.statement == null) {
-            State.statement = statement;
-        }
+        this.statement = statement;
         weight_of_offer = new float[statement.totalOffers()];
         offer_of_package = new int[statement.totalPackages()];
         cost = 0;
@@ -31,6 +29,7 @@ public class State {
     }
 
     public State(State from) {
+        this.statement = from.statement;
         this.offer_of_package = from.offer_of_package.clone();
         this.weight_of_offer = from.weight_of_offer.clone();
         this.cost = from.cost;
@@ -117,7 +116,7 @@ public class State {
             System.out.print(i + ": ");
             System.out.println(weight_of_offer[i] + "/" + oferta.getPesomax() + " -> (" + weight_of_offer[i]*100/oferta.getPesomax() + ")");
         }*/
-        System.out.println("COST = " + getCost());
+        System.out.print("COST = " + getCost());
     }
 
     public Statement getProblem() {

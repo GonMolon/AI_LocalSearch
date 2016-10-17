@@ -7,20 +7,41 @@ import aima.search.informed.HillClimbingSearch;
 
 public class Main {
     public static void main(String[] args) {
-        Statement statement = new Statement(1000, 1.2, -123);
-        State initialState = InitialStateFactory.generateInitialState(statement);
-        if(initialState.valid) {
-            Problem problem = new Problem(initialState, new SuccesorGenerator(), o -> false, new HeuristicCalculator());
-            Search search = new HillClimbingSearch();
-            try {
-                SearchAgent agent = new SearchAgent(problem, search);
-                agent.getActions().forEach(System.out::println);
-                ((State)search.getGoalState()).print();
-            } catch (Exception e) {
-                e.printStackTrace();
+        int n = 1000;
+        double prop = 1.2;
+        int seed = 123;
+        SearchAgent bestAgent = null;
+        State bestState = null;
+        for(SortMode sortMode : SortMode.values()) {
+            Statement statement = new Statement(n, prop, seed, sortMode);
+            for(int i = 0; i <= 1; ++i) {
+                State initialState = InitialStateFactory.generateInitialState(statement,  i == 0);
+                System.out.println(sortMode.name() + " sorting" + " and " + (i == 0 ? "ORIGINAL" : "ALTERNATIVE") + " generation: ");
+                if(initialState.valid) {
+                    initialState.print();
+                    Problem problem = new Problem(initialState, new SuccesorGenerator(), o -> false, new HeuristicCalculator());
+                    Search search = new HillClimbingSearch();
+                    try {
+                        SearchAgent agent = new SearchAgent(problem, search);
+                        if(bestState == null || ((State)search.getGoalState()).getCost() < bestState.getCost()) {
+                            bestAgent = agent;
+                            bestState = ((State)search.getGoalState());
+                        }
+                        System.out.print(" ---> ");
+                        ((State)search.getGoalState()).print();
+                        System.out.println();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("Initial solution not found for this combination");
+                }
             }
-        } else {
-            System.out.println("Initial solution not found");
+        }
+        if(bestState != null) {
+            //bestAgent.getActions().forEach(System.out::println);
+            System.out.println("BEST SOLUTION FOUND: ");
+            bestState.print();
         }
     }
 }

@@ -5,6 +5,7 @@ import IA.Azamon.Paquete;
 import IA.Azamon.Paquetes;
 import IA.Azamon.Transporte;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.Comparator;
 
 public class Statement {
@@ -15,7 +16,7 @@ public class Statement {
     private double totalWeight = 0;
     private double totalOfferedWeight = 0;
 
-    public Statement(int n, double prop, int seed) {
+    public Statement(int n, double prop, int seed, SortMode sortMode) {
         packages = new Paquetes(n, seed);
         packages.sort(new Comparator<Paquete>() {
             @Override
@@ -38,10 +39,14 @@ public class Statement {
                 } else if(a.getDias() > b.getDias()) {
                     return 1;
                 } else {
-                    if(a.getPrecio() < b.getPrecio()) {
-                        return -1;
-                    } else if(a.getPrecio() > b.getPrecio()) {
-                        return 1;
+                    if(sortMode != SortMode.RANDOM) {
+                        if(a.getPrecio() < b.getPrecio()) {
+                            return sortMode == SortMode.OPTIMUM ? 1 : -1;
+                        } else if(a.getPrecio() > b.getPrecio()) {
+                            return sortMode == SortMode.OPTIMUM ? -1 : 1;
+                        } else {
+                            return 0;
+                        }
                     } else {
                         return 0;
                     }
@@ -72,7 +77,7 @@ public class Statement {
                 t = 0;
             }
         }
-        print();
+        //print();
     }
 
     public int totalPackages() {
@@ -96,7 +101,7 @@ public class Statement {
     }
 
     private void print() {
-        /*System.out.println("PACKAGES");
+        System.out.println("PACKAGES");
         int id = 0;
         for(Paquete paquete : packages) {
             System.out.println("Package ID: " + id++);
@@ -112,9 +117,11 @@ public class Statement {
                 System.out.println("    " + "Price (kg): " + oferta.getPrecio());
                 System.out.println("    " + "Max weight : " + oferta.getPesomax());
             }
-        }*/
+        }
+        /*
         System.out.println("TOTAL WEIGHT = " + totalWeight);
         System.out.println("TOTAL OFFERED WEIGHT = " + totalOfferedWeight);
         System.out.println("REAL PROPORTION = " + totalOfferedWeight/totalWeight);
+        */
     }
 }
