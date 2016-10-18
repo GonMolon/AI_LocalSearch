@@ -6,7 +6,7 @@ import aima.search.framework.SuccessorFunction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuccesorGenerator implements SuccessorFunction {
+public class SuccessorGenerator implements SuccessorFunction {
 
     @Override
     public List getSuccessors(Object o) {
@@ -38,6 +38,17 @@ public class SuccesorGenerator implements SuccessorFunction {
                 }
             }
         }
+        /*
+        if(successors.size() == 0) {
+            System.out.println("PROBLEM");
+            return successors;
+        } else {
+            ArrayList<Successor> successor = new ArrayList<>();
+            int successorID = (int)(Math.random() * successors.size());
+            successor.add(successors.get(successorID));
+            return successor;
+        }
+        */
         return successors;
     }
 }

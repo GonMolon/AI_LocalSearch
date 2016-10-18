@@ -7,7 +7,7 @@ public class State {
 
     private Statement statement;
 
-    static private float HAPPINESS_RELATION = 1; //2€ for each day that the package arrives earlier
+    static private float HAPPINESS_RELATION = 10; //2€ for each day that the package arrives earlier
 
     // Contains the offer's index to which a package is assigned
     protected int[] offer_of_package;
@@ -118,7 +118,7 @@ public class State {
     }
 
     public void print() {
-        print2();
+        print1();
     }
 
     private void print1() {

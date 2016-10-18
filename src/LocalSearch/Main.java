@@ -6,13 +6,11 @@ import aima.search.framework.SearchAgent;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 public class Main {
     public static void main(String[] args) {
-        int n = 10;
-        double prop = 10;
-        int seed = 123;
+        int n = 100;
+        double prop = 1.2;
+        int seed = 1234;
         SearchAgent bestAgent = null;
         State bestState = null;
         for(SortMode sortMode : SortMode.values()) {
@@ -22,7 +20,7 @@ public class Main {
                 System.out.println(sortMode.name() + " sorting" + " and " + (i == 0 ? "ORIGINAL" : "ALTERNATIVE") + " generation: ");
                 if(initialState.valid) {
                     initialState.print();
-                    Problem problem = new Problem(initialState, new SuccesorGenerator(), o -> false, new HeuristicCalculator());
+                    Problem problem = new Problem(initialState, new SuccessorGenerator(), o -> false, new HeuristicCalculator());
                     Search search = new HillClimbingSearch();
                     try {
                         SearchAgent agent = new SearchAgent(problem, search);
