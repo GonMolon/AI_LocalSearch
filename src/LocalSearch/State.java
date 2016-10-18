@@ -102,21 +102,68 @@ public class State {
         }
     }
 
+    public boolean isSolution(){
+        double[] left_weight = new double[statement.totalOffers()];
+        for (int i = 0; i < left_weight.length; ++i) {
+            left_weight[i] = statement.getOffer(i).getPesomax();
+        }
+        boolean ok = true;
+        for (int i = 0; i < offer_of_package.length && ok; ++i) {
+            Paquete paquete = statement.getPackage(i);
+            Oferta oferta = statement.getOffer(offer_of_package[i]);
+            left_weight[offer_of_package[i]] -= paquete.getPeso();
+            ok = (left_weight[offer_of_package[i]] >= 0 && oferta.getDias() <= paquete.getPrioridad()*2+1);
+        }
+        return ok;
+    }
+
     public void print() {
+        print2();
+    }
+
+    private void print1() {
         /*System.out.println("State:");
         System.out.println("Distribution: ");
         for(int i = 0; i < statement.totalPackages(); ++i) {
-            Paquete paquete = statement.getPackage(i);
             System.out.print(i + ": ");
             System.out.println(offer_of_package[i]);
-        }*/
-        /*System.out.println("Summary: ");
+        }
+        *//*System.out.println("Summary: ");
         for(int i = 0; i < statement.totalOffers(); ++i) {
             Oferta oferta = statement.getOffer(i);
             System.out.print(i + ": ");
             System.out.println(weight_of_offer[i] + "/" + oferta.getPesomax() + " -> (" + weight_of_offer[i]*100/oferta.getPesomax() + ")");
         }*/
         System.out.print("COST = " + getCost());
+    }
+
+    private void print2() {
+        System.out.println("--------STATE---------");
+        if (!isSolution()) {
+            System.out.println("THIS SOLUTION IS INCORRECT SOMETHING WENT REALLY WRONG OMGOMGOMG");
+        }
+        System.out.print("Package ID:\t");
+        for(int i = 0; i < statement.totalPackages(); ++i) {
+            System.out.format("%4d", i);
+        }
+        System.out.println();
+        System.out.print("Offer ID:\t");
+        for(int i = 0; i < statement.totalPackages(); ++i) {
+            System.out.format("%4d", offer_of_package[i]);
+        }
+        System.out.println();
+        System.out.println();
+
+        for(int i = 0; i < statement.totalOffers(); ++i) {
+            Oferta oferta = statement.getOffer(i);
+            System.out.print(i + ": ");
+            System.out.println(weight_of_offer[i] + "/" + oferta.getPesomax());
+        }
+        System.out.println();
+
+        System.out.println("Total cost: " + getCost());
+        System.out.println("--------/STATE--------");
+
     }
 
     public Statement getProblem() {

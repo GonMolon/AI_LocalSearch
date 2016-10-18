@@ -101,13 +101,20 @@ public class Statement {
     }
 
     private void print() {
+        print2();
+    }
+
+    private void print1() {
         System.out.println("PACKAGES");
         int id = 0;
+        int total_weight = 0;
         for(Paquete paquete : packages) {
             System.out.println("Package ID: " + id++);
             System.out.println("    " + "Priority: " + paquete.getPrioridad());
             System.out.println("    " + "Weight: " + paquete.getPeso());
+            total_weight += paquete.getPeso();
         }
+        System.out.println("Total weight: " + total_weight + "kg");
         System.out.println("OFFERS");
         for(int days = 0; days < 5; ++days) {
             System.out.println(days+1 + " days: ");
@@ -123,5 +130,53 @@ public class Statement {
         System.out.println("TOTAL OFFERED WEIGHT = " + totalOfferedWeight);
         System.out.println("REAL PROPORTION = " + totalOfferedWeight/totalWeight);
         */
+    }
+
+    private void print2() {
+        System.out.println("--------STATEMENT---------");
+        int id = 0;
+        float total_weight = 0;
+        System.out.print("Package ID:\t");
+        for(Paquete paquete : packages) {
+            System.out.format("%5d",id++);
+            total_weight += paquete.getPeso();
+        }
+        System.out.println();
+        System.out.print("Priority:\t");
+        for(Paquete paquete : packages) {
+            System.out.format("%5d",paquete.getPrioridad());
+        }
+        System.out.println();
+        System.out.print("Weight:\t\t");
+        for(Paquete paquete : packages) {
+            System.out.format("%5.1f",paquete.getPeso());
+        }
+        System.out.println();
+        System.out.println(total_weight + " total weight");
+        System.out.println();
+
+
+        id = 0;
+        System.out.print("Offer ID:\t");
+        for (Oferta offer : transport) {
+            System.out.format("%5d",id++);
+        }
+        System.out.println();
+        System.out.print("Days:\t\t");
+        for (Oferta offer : transport) {
+            System.out.format("%5d",offer.getDias());
+        }
+        System.out.println();
+        System.out.print("Price(kg):\t");
+        for (Oferta offer : transport) {
+            System.out.format("%5.2f",offer.getPrecio());
+        }
+        System.out.println();
+        System.out.print("Max weight:\t");
+        for (Oferta offer : transport) {
+            System.out.format("%5.1f",offer.getPesomax());
+        }
+        System.out.println();
+        System.out.println("--------/STATEMENT--------");
     }
 }

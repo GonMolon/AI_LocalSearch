@@ -6,6 +6,8 @@ import aima.search.framework.SearchAgent;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Main {
     public static void main(String[] args) {
         int n = 10;
