@@ -18,11 +18,11 @@ public class Main {
         int ste = Integer.parseInt(args[9]);
         int k = Integer.parseInt(args[10]);
         double prop = Double.parseDouble(args[3]), lam = Double.parseDouble(args[11]);
-        boolean mode = Boolean.parseBoolean(args[6]);
+        int gen = Integer.parseInt(args[6]);
         Statement statement;
         State initialState;
         State.set_Happiness(fel);
-        if(!mode) {
+        if(gen == 0) {
             Statement.generateStatement(n, prop, seed, SortMode.OPTIMUM);
             initialState = InitialStateFactory.generateInitialState(Statement.getStatement(),  true);
         } else {
