@@ -120,7 +120,6 @@ public class State {
     public void print() {
         System.out.print(getCost());
     }
-
     private void print1() {
         /*System.out.println("State:");
         System.out.println("Distribution: ");
@@ -169,7 +168,9 @@ public class State {
         return statement;
     }
 
-    public static void set_Happiness(float Happiness){ HAPPINESS_RELATION = Happiness;}
+    public static void set_Happiness(float Happiness) {
+        HAPPINESS_RELATION = Happiness;
+    }
 
     public double getCost() {
         return cost;
