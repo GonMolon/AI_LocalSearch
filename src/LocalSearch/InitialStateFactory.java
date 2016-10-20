@@ -5,7 +5,7 @@ import IA.Azamon.Paquete;
 public class InitialStateFactory {
 
     public static State generateInitialState(Statement statement, boolean originalFunc) {
-        State state = new State(statement);
+        State state = new State();
         if(originalFunc) {
             i_generate(0, state, statement);
         } else {

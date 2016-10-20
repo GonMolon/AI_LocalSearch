@@ -114,7 +114,7 @@ public class State {
     }
 
     public void print() {
-        print1();
+        System.out.print(getCost());
     }
 
     private void print1() {
@@ -130,7 +130,6 @@ public class State {
             System.out.print(i + ": ");
             System.out.println(weight_of_offer[i] + "/" + oferta.getPesomax() + " -> (" + weight_of_offer[i]*100/oferta.getPesomax() + ")");
         }*/
-        System.out.print("COST = " + getCost());
     }
 
     private void print2() {
@@ -159,7 +158,10 @@ public class State {
 
         System.out.println("Total cost: " + getCost());
         System.out.println("--------/STATE--------");
+    }
 
+    public static void set_Happiness(float Happiness){
+        HAPPINESS_RELATION = Happiness;
     }
 
     public double getCost() {
