@@ -171,6 +171,7 @@ done
 EXPNAME="HAPPINESS"
 OUT="0"
 FEL="0"
+ALG="0"
 fel_incremento="0.2"
 NPAQS="100"
 PROP="1.2"
@@ -187,3 +188,22 @@ while [ "$i" -le "$paqs_iteraciones" ]; do
     FEL=$(echo "$FEL + $fel_incremento" | bc)
 done
 # Repetir experimentos con simulated annealing
+EXPNAME="HAPPINESS_annealing"
+OUT="0"
+FEL="0"
+ALG="1"
+fel_incremento="0.2"
+NPAQS="100"
+PROP="1.2"
+fel_iteraciones="5000"
+i="1"
+echo "FEL\tCOST" >> ${DIRECTORIES[1]}/$EXPNAME
+while [ "$i" -le "$paqs_iteraciones" ]; do
+    SEED=$(./$RANDFILE 1)
+    cost=$(java -jar ./$JARFILE $OUT $SEED $NPAQ $PROP $FEL $OPE $GEN $ALG)
+    echo "$SEED" >> ${DIRECTORIES[0]}/$EXPNAME
+    echo "$FEL" >> "${DIRECTORIES[1]}/${EXPNAME}"
+    echo "$cost" >> "${DIRECTORIES[1]}/${EXPNAME}"
+    i=$(($i + 1))
+    FEL=$(echo "$FEL + $fel_incremento" | bc)
+done
