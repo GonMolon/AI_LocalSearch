@@ -160,7 +160,7 @@ public class State {
         System.out.println("--------/STATE--------");
     }
 
-    public static void set_Happiness(float Happiness){
+    public static void set_Happiness(float Happiness) {
         HAPPINESS_RELATION = Happiness;
     }
 
