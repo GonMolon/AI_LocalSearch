@@ -5,7 +5,7 @@ import IA.Azamon.Paquete;
 
 public class State {
 
-    static private float HAPPINESS_RELATION = 10; //2€ for each day that the package arrives earlier
+    static private float HAPPINESS_RELATION = 0; //2€ for each day that the package arrives earlier
 
     // Contains the offer's index to which a package is assigned
     protected int[] offer_of_package;
