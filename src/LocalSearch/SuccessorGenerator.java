@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SuccessorGenerator extends SuccessorsGenerator {
+
+    public SuccessorGenerator(boolean allOperators) {
+        super(allOperators);
+    }
+
     @Override
     public List getSuccessors(Object o) {
         List successors = super.getSuccessors(o);

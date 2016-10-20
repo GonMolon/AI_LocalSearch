@@ -22,20 +22,20 @@ public class Main {
         Statement statement;
         State initialState;
         State.set_Happiness(fel);
-        if(mode) {
+        if(!mode) {
             Statement.generateStatement(n, prop, seed, SortMode.OPTIMUM);
             initialState = InitialStateFactory.generateInitialState(Statement.getStatement(),  true);
         } else {
             Statement.generateStatement(n, prop, seed, SortMode.RANDOM);
             initialState = InitialStateFactory.generateInitialState(Statement.getStatement(),  false);
         }
-        Search search = null;
-        Problem problem = null;
+        Search search;
+        Problem problem;
         if(alg == 0) {
-            problem = new Problem(initialState, new SuccessorsGenerator(), o -> false, new HeuristicCalculator());
+            problem = new Problem(initialState, new SuccessorsGenerator(ope == 0), o -> false, new HeuristicCalculator());
             search = new HillClimbingSearch();
         } else {
-            problem = new Problem(initialState, new SuccessorGenerator(), o -> false, new HeuristicCalculator());
+            problem = new Problem(initialState, new SuccessorGenerator(ope == 0), o -> false, new HeuristicCalculator());
             search = new SimulatedAnnealingSearch(ite,ste,k,lam);
         }
         long start_time = System.currentTimeMillis();

@@ -8,6 +8,12 @@ import java.util.List;
 
 public class SuccessorsGenerator implements SuccessorFunction {
 
+    public boolean allOperators;
+
+    public SuccessorsGenerator(boolean allOperators) {
+        this.allOperators = allOperators;
+    }
+
     public void operatorMove(State state, List successors) {
         State nextState = new State(state);
         for(int fromID = 0; fromID < Statement.getStatement().totalPackages(); ++fromID) {
@@ -45,7 +51,9 @@ public class SuccessorsGenerator implements SuccessorFunction {
         State state = (State) o;
         ArrayList<Successor> successors = new ArrayList<>();
         operatorMove(state, successors);
-        operatorSwap(state, successors);
+        if(allOperators) {
+            operatorSwap(state, successors);
+        }
         return successors;
     }
 }
