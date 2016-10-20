@@ -20,7 +20,7 @@ public class Main {
             statement = new Statement(n, prop, seed, SortMode.RANDOM);
             initialState = InitialStateFactory.generateInitialState(statement,  false);
         }
-        Problem problem = new Problem(initialState, new SuccessorGenerator(), o -> false, new HeuristicCalculator());
+        Problem problem = new Problem(initialState, new SuccessorsGenerator(), o -> false, new HeuristicCalculator());
         Search search = new HillClimbingSearch();
         try {
             SearchAgent agent = new SearchAgent(problem, search);
