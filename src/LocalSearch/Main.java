@@ -8,17 +8,20 @@ import aima.search.informed.SimulatedAnnealingSearch;
 
 public class Main {
     public static void main(String[] args) {
-        int out = Integer.parseInt(args[0]), seed = Integer.parseInt(args[1]),
-                n = Integer.parseInt(args[2]), fel = Integer.parseInt(args[4]),
-                ope = Integer.parseInt(args[5]), alg = Integer.parseInt(args[7]),
-                ite = Integer.parseInt(args[8]), ste = Integer.parseInt(args[9]),
-                k = Integer.parseInt(args[10]);
+        int out = Integer.parseInt(args[0]);
+        int seed = Integer.parseInt(args[1]);
+        int n = Integer.parseInt(args[2]);
+        int fel = Integer.parseInt(args[4]);
+        int ope = Integer.parseInt(args[5]);
+        int alg = Integer.parseInt(args[7]);
+        int ite = Integer.parseInt(args[8]);
+        int ste = Integer.parseInt(args[9]);
+        int k = Integer.parseInt(args[10]);
         double prop = Double.parseDouble(args[3]), lam = Double.parseDouble(args[11]);
         boolean mode = Boolean.parseBoolean(args[6]);
         Statement statement;
         State initialState;
         State.set_Happiness(fel);
-        long start_time = System.currentTimeMillis();
         if(mode) {
             Statement.generateStatement(n, prop, seed, SortMode.OPTIMUM);
             initialState = InitialStateFactory.generateInitialState(Statement.getStatement(),  true);
@@ -35,10 +38,10 @@ public class Main {
             problem = new Problem(initialState, new SuccessorGenerator(), o -> false, new HeuristicCalculator());
             search = new SimulatedAnnealingSearch(ite,ste,k,lam);
         }
-        long end_time = System.currentTimeMillis();
+        long start_time = System.currentTimeMillis();
         try {
             SearchAgent agent = new SearchAgent(problem, search);
-            long total_time = end_time - start_time;
+            long total_time = System.currentTimeMillis() - start_time;
             if(out == 0) ((State)search.getGoalState()).print();
             else System.out.println(total_time);
         } catch (Exception e) {
