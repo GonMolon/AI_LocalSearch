@@ -14,11 +14,11 @@ public class Main {
         Statement statement;
         State initialState;
         if(mode) {
-            statement = new Statement(n, prop, seed, SortMode.OPTIMUM);
-            initialState = InitialStateFactory.generateInitialState(statement,  true);
+            Statement.generateStatement(n, prop, seed, SortMode.OPTIMUM);
+            initialState = InitialStateFactory.generateInitialState(Statement.getStatement(),  true);
         } else {
-            statement = new Statement(n, prop, seed, SortMode.RANDOM);
-            initialState = InitialStateFactory.generateInitialState(statement,  false);
+            Statement.generateStatement(n, prop, seed, SortMode.RANDOM);
+            initialState = InitialStateFactory.generateInitialState(Statement.getStatement(),  false);
         }
         Problem problem = new Problem(initialState, new SuccessorsGenerator(), o -> false, new HeuristicCalculator());
         Search search = new HillClimbingSearch();

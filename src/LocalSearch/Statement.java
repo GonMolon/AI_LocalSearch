@@ -10,13 +10,19 @@ import java.util.Comparator;
 
 public class Statement {
 
+    private static Statement statement;
+
     private Paquetes packages;
     private Transporte transport;
     protected int[][] offers;
     private double totalWeight = 0;
     private double totalOfferedWeight = 0;
 
-    public Statement(int n, double prop, int seed, SortMode sortMode) {
+    public static void generateStatement(int n, double prop, int seed, SortMode sortMode) {
+        statement = new Statement(n, prop, seed, sortMode);
+    }
+
+    private Statement(int n, double prop, int seed, SortMode sortMode) {
         packages = new Paquetes(n, seed);
         packages.sort(new Comparator<Paquete>() {
             @Override
@@ -77,7 +83,10 @@ public class Statement {
                 t = 0;
             }
         }
-        //print();
+    }
+
+    public static Statement getStatement() {
+        return statement;
     }
 
     public int totalPackages() {
