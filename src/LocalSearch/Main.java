@@ -7,9 +7,10 @@ import aima.search.informed.HillClimbingSearch;
 
 public class Main {
     public static void main(String[] args) {
-        int n = 100;
-        double prop = 1.2;
-        int seed = 1234;
+        int out = Integer.parseInt(args[0]), seed = Integer.parseInt(args[1]),
+                n = Integer.parseInt(args[2]), fel = Integer.parseInt(args[4]),
+                ope = Integer.parseInt(args[5]),
+        double prop = Double.parseDouble([3]),
         boolean mode = true;
         Statement statement;
         State initialState;
