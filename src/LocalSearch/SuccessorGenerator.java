@@ -7,8 +7,8 @@ import java.util.List;
 
 public class SuccessorGenerator extends SuccessorsGenerator {
 
-    public SuccessorGenerator(boolean allOperators) {
-        super(allOperators);
+    public SuccessorGenerator(int operatorSet) {
+        super(operatorSet);
     }
 
     @Override

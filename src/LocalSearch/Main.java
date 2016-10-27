@@ -35,10 +35,10 @@ public class Main {
         Search search;
         Problem problem;
         if(alg == 0) {
-            problem = new Problem(initialState, new SuccessorsGenerator(ope == 0), o -> false, new HeuristicCalculator());
+            problem = new Problem(initialState, new SuccessorsGenerator(ope), o -> false, new HeuristicCalculator());
             search = new HillClimbingSearch();
         } else {
-            problem = new Problem(initialState, new SuccessorGenerator(ope == 0), o -> false, new HeuristicCalculator());
+            problem = new Problem(initialState, new SuccessorGenerator(ope), o -> false, new HeuristicCalculator());
             search = new SimulatedAnnealingSearch(ite,ste,k,lam);
         }
         long start_time = System.currentTimeMillis();
