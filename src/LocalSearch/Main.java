@@ -39,7 +39,7 @@ public class Main {
             search = new HillClimbingSearch();
         } else {
             problem = new Problem(initialState, new SuccessorGenerator(ope), o -> false, new HeuristicCalculator());
-            search = new SimulatedAnnealingSearch(ite,ste,k,lam);
+            search = new SimulatedAnnealingSearch(ite, ste, k, lam);
         }
         long start_time = System.currentTimeMillis();
         try {
