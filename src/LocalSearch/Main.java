@@ -45,8 +45,13 @@ public class Main {
         try {
             SearchAgent agent = new SearchAgent(problem, search);
             long total_time = System.currentTimeMillis() - start_time;
-            if(out == 0) ((State)search.getGoalState()).print();
-            else System.out.println(total_time);
+            if(out == 0) {
+                State finalState = ((State)search.getGoalState());
+                System.out.println("Cost: " + finalState.getCost());
+                System.out.println("Heuristic: " + (finalState.getCost() - finalState.getHappiness()));
+            } else {
+                System.out.println(total_time);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

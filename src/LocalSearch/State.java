@@ -5,14 +5,15 @@ import IA.Azamon.Paquete;
 
 public class State {
 
-    static private float HAPPINESS_RELATION = 0; //2€ for each day that the package arrives earlier
+    static private float HAPPINESS_RELATION = 0;
 
     // Contains the offer's index to which a package is assigned
     protected int[] offer_of_package;
     // Contains the sum of weights of the packages assigned to an offer
     protected float[] weight_of_offer;
 
-    private  double cost;
+    private double cost;
+    private double happiness;
 
     public boolean valid = false;
 
@@ -20,6 +21,7 @@ public class State {
         weight_of_offer = new float[Statement.getStatement().totalOffers()];
         offer_of_package = new int[Statement.getStatement().totalPackages()];
         cost = 0;
+        happiness = 0;
         for(int id = 0; id < offer_of_package.length; ++id) { //By default, a package is not assigned
             offer_of_package[id] = -1;
         }
@@ -29,6 +31,7 @@ public class State {
         this.offer_of_package = from.offer_of_package.clone();
         this.weight_of_offer = from.weight_of_offer.clone();
         this.cost = from.cost;
+        this.happiness = from.happiness;
     }
 
     public boolean movePackage(int packageID, int offerID) {
@@ -91,73 +94,11 @@ public class State {
         double happiness = (p.getPrioridad()*2) - o.getDias();
         if(happiness > 0) {
             if(add) {
-                cost -= happiness * HAPPINESS_RELATION;
+                this.happiness += happiness;
             } else {
-                cost += happiness * HAPPINESS_RELATION;
+                this.happiness -= happiness;
             }
         }
-    }
-
-    public boolean isSolution(){
-        double[] left_weight = new double[Statement.getStatement().totalOffers()];
-        for (int i = 0; i < left_weight.length; ++i) {
-            left_weight[i] = Statement.getStatement().getOffer(i).getPesomax();
-        }
-        boolean ok = true;
-        for (int i = 0; i < offer_of_package.length && ok; ++i) {
-            Paquete paquete = Statement.getStatement().getPackage(i);
-            Oferta oferta = Statement.getStatement().getOffer(offer_of_package[i]);
-            left_weight[offer_of_package[i]] -= paquete.getPeso();
-            ok = (left_weight[offer_of_package[i]] >= 0 && oferta.getDias() <= paquete.getPrioridad()*2+1);
-        }
-        return ok;
-    }
-
-    public void print() {
-        System.out.print(getCost());
-    }
-
-    private void print1() {
-        /*System.out.println("State:");
-        System.out.println("Distribution: ");
-        for(int i = 0; i < statement.totalPackages(); ++i) {
-            System.out.print(i + ": ");
-            System.out.println(offer_of_package[i]);
-        }
-        *//*System.out.println("Summary: ");
-        for(int i = 0; i < statement.totalOffers(); ++i) {
-            Oferta oferta = statement.getOffer(i);
-            System.out.print(i + ": ");
-            System.out.println(weight_of_offer[i] + "/" + oferta.getPesomax() + " -> (" + weight_of_offer[i]*100/oferta.getPesomax() + ")");
-        }*/
-    }
-
-    private void print2() {
-        System.out.println("--------STATE---------");
-        if (!isSolution()) {
-            System.out.println("THIS SOLUTION IS INCORRECT SOMETHING WENT REALLY WRONG OMGOMGOMG");
-        }
-        System.out.print("Package ID:\t");
-        for(int i = 0; i < Statement.getStatement().totalPackages(); ++i) {
-            System.out.format("%4d", i);
-        }
-        System.out.println();
-        System.out.print("Offer ID:\t");
-        for(int i = 0; i < Statement.getStatement().totalPackages(); ++i) {
-            System.out.format("%4d", offer_of_package[i]);
-        }
-        System.out.println();
-        System.out.println();
-
-        for(int i = 0; i < Statement.getStatement().totalOffers(); ++i) {
-            Oferta oferta = Statement.getStatement().getOffer(i);
-            System.out.print(i + ": ");
-            System.out.println(weight_of_offer[i] + "/" + oferta.getPesomax());
-        }
-        System.out.println();
-
-        System.out.println("Total cost: " + getCost());
-        System.out.println("--------/STATE--------");
     }
 
     public static void set_Happiness(float Happiness) {
@@ -166,5 +107,9 @@ public class State {
 
     public double getCost() {
         return cost;
+    }
+
+    public double getHappiness() {
+        return happiness * HAPPINESS_RELATION;
     }
 }

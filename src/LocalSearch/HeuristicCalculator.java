@@ -6,6 +6,6 @@ public class HeuristicCalculator implements HeuristicFunction {
 
     @Override
     public double getHeuristicValue(Object state) {
-        return ((State) state).getCost();
+        return ((State) state).getCost() - ((State) state).getHappiness();
     }
 }
