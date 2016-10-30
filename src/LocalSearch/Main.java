@@ -14,8 +14,8 @@ public class Main {
         int out = Integer.parseInt(args[0]);
         int seed = Integer.parseInt(args[1]);
         int n = Integer.parseInt(args[2]);
-        double prop = Double.parseDouble(args[3]);
-        int fel = Integer.parseInt(args[4]);
+        float prop = Float.parseFloat(args[3]);
+        float fel = Float.parseFloat(args[4]);
         int ope = Integer.parseInt(args[5]);
         int gen = Integer.parseInt(args[6]);
         int alg = Integer.parseInt(args[7]);
