@@ -47,10 +47,10 @@ public class Main {
             long total_time = System.currentTimeMillis() - start_time;
             if(out == 0) {
                 State finalState = ((State)search.getGoalState());
-                System.out.println("Cost: " + finalState.getCost());
-                System.out.println("Heuristic: " + (finalState.getCost() - finalState.getHappiness()));
+                System.out.println("Final cost: " + finalState.getCost());
+                System.out.println("Heuristic final value: " + (finalState.getCost() - finalState.getHappiness()));
             } else {
-                System.out.println(total_time);
+                System.out.println("Total time: " + total_time);
             }
         } catch (Exception e) {
             e.printStackTrace();
